@@ -1,5 +1,8 @@
 # SA-Lab-1
+**Author: Davyd Ilnytkyi**
 
+
+# Results
 ## POST
 **Sending two messages ("I am message {1, 2}") via Postman:**
 
@@ -48,3 +51,24 @@ Sending second message(this one also has uuid 9991):\
 
 **Logging service console:**
 ![alt text](./images/POST_logging_deduplication.png)
+
+# Usage
+```
+pip install -r requirements.txt
+```
+
+```
+python3 facade_service.py
+```
+
+
+```
+python3 logging_service.py
+```
+
+
+```
+python3 messages_service.py
+```
+
+**Send requests via Postman or something.**
