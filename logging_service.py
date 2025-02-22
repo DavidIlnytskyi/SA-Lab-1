@@ -9,6 +9,7 @@ messages = dict()
 @app.post("/")
 def add_data(data: DataModel):
     if data.uuid in messages.keys():
+        print(f"UUID Duplication for msg: {data.msg}")
         return {"msg": "duplication"}
 
     messages[data.uuid] = data.msg

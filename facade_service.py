@@ -8,7 +8,6 @@ from domain import *
 MAX_RETRIES = 3
 RETRY_DELAY = 2
 
-processed_uuids = set()
 messages = dict()
 
 logging_url = "http://127.0.0.1:5001"
@@ -18,20 +17,26 @@ app = FastAPI()
 
 @app.post("/")
 def add_data(message: Message):
-    uuid_val = uuid.uuid4()
+    uuid_val = 9991
 
     data = {"uuid": str(uuid_val), "msg": message.msg}
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             response = requests.post(logging_url, json=data, timeout=3)
             if response.status_code == 200:
+                if response.json().get("msg") == "duplication":
+                    return {"msg": "duplication"}
+
                 print("Message sent successfully")
-                return
+                return {"msg": "success"}
+                
         except requests.exceptions.RequestException:
             print(f"Attempt {attempt}: Logging service unavailable. Retrying...")
             time.sleep(RETRY_DELAY)
 
-    return {"msg": "success"}
+    return {"msg": "logging service mistake"}
+    
+
 
 @app.get("/")
 def get_data():
