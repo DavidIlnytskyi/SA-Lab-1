@@ -17,7 +17,7 @@ app = FastAPI()
 
 @app.post("/")
 def add_data(message: Message):
-    uuid_val = 9991
+    uuid_val = uuid.uuid4()
 
     data = {"uuid": str(uuid_val), "msg": message.msg}
     for attempt in range(1, MAX_RETRIES + 1):
